@@ -55,9 +55,11 @@ app.get('/guest-login',(req,res)=>{
             if(result){
                 const guestLogin={
                     username:user.username,
-                    id:user.id
+                    id:user.id,
+                    feet:user.feet,
+                    inches:user.inches,
+                    pounds:user.pounds
                 }
-                console.log("Logged IN")
                 res.json({success:true,guest:guestLogin})
             }else{
                 //failed to authen user due to password not matching db password
@@ -102,6 +104,9 @@ app.post('/login',(req,res)=>{
 app.post('/register',(req,res)=>{
     const username=req.body.username
     const password=req.body.password
+    const feet=req.body.feet
+    const inches=req.body.inches
+    const pounds=req.body.pounds
 
     models.User.findOne({
         where:{
@@ -118,7 +123,10 @@ app.post('/register',(req,res)=>{
                         if(!error){
                             const user=models.User.build({
                                 username:username,
-                                password:hash
+                                password:hash,
+                                feet:feet,
+                                inches:inches,
+                                pounds:pounds
                             })
                             user.save()
                             .then(_=>{
