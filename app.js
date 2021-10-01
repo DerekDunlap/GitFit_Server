@@ -173,6 +173,21 @@ app.post('/add-workout',(req,res)=>{
     })
 })
 
+app.post('/update-workout',(req,res)=>{
+    const workoutID=req.body.workoutID
+    const numberOfSets=req.body.updateSet
+    const numberOfReps=req.body.updateRep
+
+    console.log(workoutID,numberOfSets,numberOfReps)
+    // models.WorkoutPlan.update({
+    //     where:{
+    //         workoutID:workoutID
+    //     }
+    // }).then(updatedWorkout=>{
+    //     console.log(updatedWorkout)
+    // })
+})
+
 app.post('/remove-workout',(req,res)=>{
     const userID=req.body.userID
     const workoutID=req.body.workoutID
