@@ -86,7 +86,10 @@ app.post('/login',(req,res)=>{
             if(result){
                 const userLogin={
                     username:user.username,
-                    id:user.id
+                    id:user.id,
+                    feet:user.feet,
+                    inches:user.inches,
+                    pounds:user.pounds
                 }
                 console.log("Logged IN")
                 res.json({success:true,user:userLogin})
@@ -173,20 +176,21 @@ app.post('/add-workout',(req,res)=>{
     })
 })
 
-app.post('/update-workout',(req,res)=>{
-    const workoutID=req.body.workoutID
-    const numberOfSets=req.body.updateSet
-    const numberOfReps=req.body.updateRep
+//Commented out feature: Allow user to update Sets/Reps
+// app.post('/update-workout',(req,res)=>{
+//     const workoutID=req.body.workoutID
+//     const numberOfSets=req.body.updateSet
+//     const numberOfReps=req.body.updateRep
 
-    console.log(workoutID,numberOfSets,numberOfReps)
-    // models.WorkoutPlan.update({
-    //     where:{
-    //         workoutID:workoutID
-    //     }
-    // }).then(updatedWorkout=>{
-    //     console.log(updatedWorkout)
-    // })
-})
+//     console.log(workoutID,numberOfSets,numberOfReps)
+//     // models.WorkoutPlan.update({
+//     //     where:{
+//     //         workoutID:workoutID
+//     //     }
+//     // }).then(updatedWorkout=>{
+//     //     console.log(updatedWorkout)
+//     // })
+// })
 
 app.post('/remove-workout',(req,res)=>{
     const userID=req.body.userID
