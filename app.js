@@ -27,19 +27,19 @@ app.use(express.json())
 //     })
 // })
 
-function validateUsername(username){
-    if (/^([a-zA-Z])[a-zA-Z_-]*[\w_-]*[\S]$|^([a-zA-Z])[0-9_-]*[\S]$|^[a-zA-Z]*[\S]$/.test(username)){
-        return (username)
-    }
-        return "false"
-}
+// function validateUsername(username){
+//     if (/^([a-zA-Z])[a-zA-Z_-]*[\w_-]*[\S]$|^([a-zA-Z])[0-9_-]*[\S]$|^[a-zA-Z]*[\S]$/.test(username)){
+//         return (username)
+//     }
+//         return "false"
+// }
 
-function validatePassword(password){
-    if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{4,8}$/.test(password)){
-        return (password)
-    }
-        return "false"
-}
+// function validatePassword(password){
+//     if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{4,8}$/.test(password)){
+//         return (password)
+//     }
+//         return "false"
+// }
 
 app.get('/guest-login',(req,res)=>{
     const guestName='admin'
