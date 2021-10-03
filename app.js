@@ -1,5 +1,4 @@
 const express=require('express')
-const axios=require('axios').default
 const cors=require('cors')
 global.bcrypt=require('bcryptjs')
 global.models=require('./models')
@@ -7,6 +6,8 @@ const app=express()
 
 app.use(cors())
 app.use(express.json())
+
+const PORT=process.env.PORT||8080
 
 // app.get('/',(req,res)=>{
 //     axios(`https://api.quotable.io/quotes?tags=inspirational`)
@@ -260,6 +261,6 @@ app.post('/my-workoutplan',(req,res)=>{
     })
 })
 
-app.listen(8080,()=>{
+app.listen(PORT,()=>{
     console.log('Server running...')
 })
