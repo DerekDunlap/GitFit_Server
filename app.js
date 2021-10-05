@@ -1,4 +1,6 @@
 const express=require('express')
+const jwt=require('jsonwebtoken')
+const authenticate=require('./middleware/authentication/authentication')
 const cors=require('cors')
 global.bcrypt=require('bcryptjs')
 global.models=require('./models')
@@ -54,14 +56,15 @@ app.get('/guest-login',(req,res)=>{
     .then(user=>{
         bcrypt.compare(guestPassword,user.password,function(error,result){
             if(result){
-                const guestLogin={
+                const guest={
                     username:user.username,
                     id:user.id,
                     feet:user.feet,
                     inches:user.inches,
                     pounds:user.pounds
                 }
-                res.json({success:true,guest:guestLogin})
+                const token = jwt.sign({user:guest},'KEYBOARD CAT')
+                res.json({success:true,guestToken:token})
             }else{
                 //failed to authen user due to password not matching db password
                 res.json({success:false})
@@ -87,13 +90,11 @@ app.post('/login',(req,res)=>{
             if(result){
                 const userLogin={
                     username:user.username,
-                    id:user.id,
-                    feet:user.feet,
-                    inches:user.inches,
-                    pounds:user.pounds
+                    id:user.id
                 }
-                console.log("Logged IN")
-                res.json({success:true,user:userLogin})
+                const token = jwt.sign({user:userLogin},'KEYBOARD CAT')
+                console.log(token)
+                res.json({success:true,userToken:token})
             }else{
                 //failed to authen user due to password not matching db password
                 res.json({success:false})
@@ -242,18 +243,17 @@ app.post('/delete-user',(req,res)=>{
     })
 })
 
-app.get('/workouts',(req,res)=>{
+app.get('/workouts',authenticate,(req,res)=>{
     models.Workout.findAll()
     .then(workouts=>{
         res.json(workouts)
     })
 })
 
-app.post('/my-workoutplan',(req,res)=>{
-    const userID=req.body.userID
+app.get('/my-workoutplan',authenticate,(req,res)=>{
     models.WorkoutPlan.findAll({
         where:{
-            userID:userID
+            userID:req.authUserID
         }
     })
     .then(myWorkoutPlan=>{
